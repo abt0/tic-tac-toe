@@ -52,6 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (roundWon) {
             status.textContent = `Player ${currentPlayer} wins!`;
             gameActive = false;
+            // Highlight winning cells
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (gameState[a] !== '' && gameState[a] === gameState[b] && gameState[b] === gameState[c]) {
+                    document.querySelector(`[data-index='${a}']`).classList.add('winning-cell');
+                    document.querySelector(`[data-index='${b}']`).classList.add('winning-cell');
+                    document.querySelector(`[data-index='${c}']`).classList.add('winning-cell');
+                    break; 
+                }
+            }
             return;
         }
         
@@ -75,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         status.textContent = `Player ${currentPlayer}'s turn`;
         cells.forEach(cell => {
             cell.textContent = '';
+            cell.classList.remove('winning-cell'); // Remove winning-cell class
         });
     }
     
